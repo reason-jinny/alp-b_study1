@@ -36,17 +36,17 @@ public class PostController {
     }
 
     @GetMapping("/{id}") // 특정 ID의 글 조회 API
-    public Post getPostById(@PathVariable int id) { // @PathVariable int id: URL에서 {id} 값을 가져와서 id 변수에 저장
+    public Post getPostById(@PathVariable Long id) { // @PathVariable int id: URL에서 {id} 값을 가져와서 id 변수에 저장
         return postService.getPostById(id); // 글이 없으면 null 반환
     }
 
     @PutMapping("/{id}") // 특정 ID의 글 수정 API
-    public Post updatePost(@PathVariable int id, @RequestBody Post updatedPost) {
+    public Post updatePost(@PathVariable Long id, @RequestBody Post updatedPost) {
         return postService.updatePost(id, updatedPost); // 글이 없으면 null 반환
     }
 
     @DeleteMapping("/{id}") // 특정 ID의 글 삭제 API
-    public String deletePost(@PathVariable int id) {
+    public String deletePost(@PathVariable Long id) {
         boolean deleted = postService.deletePost(id);
         return deleted ? "삭제 완료" : "삭제할 글을 찾을 수 없습니다.";
     }

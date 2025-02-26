@@ -4,8 +4,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity // JPA 엔티티 선언
+@Getter
+@Setter
 public class Post {
 
     @Id
@@ -23,38 +27,6 @@ public class Post {
         // this.id = id; // ID가 자동 생성되므로 직접 설정하면 안 됨.
         this.title = title;
         this.content = content;
-        this.author = author;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    // public void setId(int id) { // @GeneratedValue(strategy = GenerationType.IDENTITY)를 사용해서 DB가 ID를 자동 생성하므로 필요 없음.
-    //     this.id = id;
-    // }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
         this.author = author;
     }
 }

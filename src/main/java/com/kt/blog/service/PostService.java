@@ -1,10 +1,10 @@
 package com.kt.blog.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.kt.blog.exception.EntityNotFoundException;
 import com.kt.blog.model.Post;
 import com.kt.blog.repository.PostRepository;
 
@@ -33,28 +33,28 @@ public class PostService {
 
     // 특정 ID의 글 조회
     public Post getPostById(Long id) {
-        return postRepository.findById(id).orElse(null); // JPA가 자동으로 특정 ID 검색
+        return postRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("해당 ID의 글을 찾을 수 없습니다: " + id));
     }   
 
     // 특정 ID의 글 수정
     public Post updatePost(Long id, Post updatedPost) {
-        Optional<Post> postOptional = postRepository.findById(id);
-        if (postOptional.isPresent()) {
-            Post post = postOptional.get(); // Optional에서 Post 객체 가져오기
-            post.setTitle(updatedPost.getTitle());
-            post.setContent(updatedPost.getContent());
-            post.setAuthor(updatedPost.getAuthor());
-            return postRepository.save(post); // 수정된 내용 DB에 반영
-        }
-        return null;
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("해당 ID의 글을 찾을 수 없습니다: " + id));
+
+        post.setTitle(updatedPost.getTitle());
+        post.setContent(updatedPost.getContent());
+        post.setAuthor(updatedPost.getAuthor());
+
+        return postRepository.save(post);
     }
 
     // 특정 ID의 글 삭제
     public boolean deletePost(Long id) {
-        if (postRepository.existsById(id)) { // 해당 ID가 존재하는지 확인
-            postRepository.deleteById(id); // DB에서 삭제
-            return true;
+        if (!postRepository.existsById(id)) {
+            throw new EntityNotFoundException("해당 ID의 글을 찾을 수 없습니다: " + id);
         }
-        return false;    
+        postRepository.deleteById(id);
+        return true;    
     }
 }

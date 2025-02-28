@@ -18,9 +18,9 @@ public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 자동 증가 ID
-    private Long post_id;
+    private Long postId;
 
-    private String post_title;
-    private String post_content;
-    private String post_author;
+    private String postTitle;
+    private String postContent;
+    private String postAuthor;
 }

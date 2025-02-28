@@ -4,29 +4,23 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity // JPA 엔티티 선언
+@Entity
 @Getter
 @Setter
+@NoArgsConstructor // 기본 생성자 자동 생성
+@AllArgsConstructor // 모든 필드를 생성하는 생성자 자동 생성
 public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 자동 증가 ID
-    private Long id; // int -> Long으로 수정: JPA의 @GeneratedValue는 기본적으로 Long을 선호
+    private Long id;
 
     private String title;
     private String content;
     private String author;
-
-    public Post() { // JPA에서는 기본 생성자 필수 - 엔터티 만들 떄 필요
-    }
-
-    public Post(String title, String content, String author) {
-        // this.id = id; // ID가 자동 생성되므로 직접 설정하면 안 됨.
-        this.title = title;
-        this.content = content;
-        this.author = author;
-    }
 }

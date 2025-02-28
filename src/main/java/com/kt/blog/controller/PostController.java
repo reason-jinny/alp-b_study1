@@ -18,16 +18,14 @@ import com.kt.blog.exception.EntityNotFoundException;
 import com.kt.blog.model.Post;
 import com.kt.blog.service.PostService;
 
+import lombok.AllArgsConstructor;
+
 @RestController
 @RequestMapping("/posts")
+@AllArgsConstructor // 모든 필드를 생성하는 생성자 자동 생성
 public class PostController {
 
-    private final PostService postService;
-
-    // 생성자를 이용한 의존성 주입
-    public PostController(PostService postService) {
-        this.postService = postService;
-    }
+    private final PostService postService; // Lombok이 생성자를 자동 생성해줌
 
     @PostMapping // 글 작성(추가) API
     public ResponseEntity<Post> addPost(@RequestBody Post post) { // @RequestBody Post post: 사용자가 보낸 JSON 데이터를 Post 객체로 변환

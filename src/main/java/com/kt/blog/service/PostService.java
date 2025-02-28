@@ -8,27 +8,22 @@ import com.kt.blog.exception.EntityNotFoundException;
 import com.kt.blog.model.Post;
 import com.kt.blog.repository.PostRepository;
 
+import lombok.AllArgsConstructor;
+
 @Service
+@AllArgsConstructor // 모든 필드를 포함하는 생성자 자동 생성
 public class PostService {
 
-    // private List<Post> posts = new ArrayList<>(); // JPA 사용 시 필요 없음
-    // private int nextId = 1; // ID 자동 증가 필요 없음 (JPA가 자동으로 관리)
-
-    public final PostRepository postRepository; // 이제 JPA를 사용하므로, DB에서 데이터 관리
-
-    // 생성자에서 PostRepository를 받아서 초기화
-    public PostService(PostRepository postRepository) {
-        this.postRepository = postRepository;
-    }
+    public final PostRepository postRepository; // Lombok이 생성자를 자동 생성해줌
 
     // 글 작성(추가)
     public Post addPost(Post post) {
-        return postRepository.save(post); // JPA가 자동으로 ID를 생성하고 DB에 저장
+        return postRepository.save(post);
     }
 
     // 모든 글 조회
     public List<Post> getAllPosts() {
-        return postRepository.findAll();   // DB에서 모든 데이터 가져오기
+        return postRepository.findAll();
     }
 
     // 특정 ID의 글 조회

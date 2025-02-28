@@ -37,9 +37,9 @@ public class PostService {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("해당 ID의 글을 찾을 수 없습니다: " + id));
 
-        post.setTitle(updatedPost.getTitle());
-        post.setContent(updatedPost.getContent());
-        post.setAuthor(updatedPost.getAuthor());
+        post.setPost_title(updatedPost.getPost_title());
+        post.setPost_content(updatedPost.getPost_content());
+        post.setPost_author(updatedPost.getPost_author());
 
         return postRepository.save(post);
     }

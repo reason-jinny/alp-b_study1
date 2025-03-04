@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kt.blog.dto.PostDTO;
 import com.kt.blog.exception.EntityNotFoundException;
 import com.kt.blog.model.Post;
 import com.kt.blog.service.PostService;
@@ -39,9 +40,10 @@ public class PostController {
     }
 
     @GetMapping("/{id}") // 특정 ID의 글 조회 API
-    public ResponseEntity<Post> getPostById(@PathVariable Long id) { // @PathVariable int id: URL에서 {id} 값을 가져와서 id 변수에 저장
+    public ResponseEntity<PostDTO> getPostById(@PathVariable Long id) { // @PathVariable int id: URL에서 {id} 값을 가져와서 id 변수에 저장
         Post post = postService.getPostById(id);
-        return ResponseEntity.ok(post); // 글이 없으면 null 반환
+        PostDTO postDTO = postService.convertToDTO(post);
+        return ResponseEntity.ok(postDTO); // 글이 없으면 null 반환
     }
 
     @PutMapping("/{id}") // 특정 ID의 글 수정 API

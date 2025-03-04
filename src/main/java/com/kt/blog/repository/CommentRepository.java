@@ -11,5 +11,5 @@ import com.kt.blog.model.Post;
 public interface CommentRepository extends JpaRepository<Comment, Long> { // JpaRepository<Comment, Long>: Comment 엔티티의 기본 CRUD 기능을 제공
 
     List<Comment> findByPost(Post post); // 특정 게시글(Post)에 속한 모든 댓글 조회
-    Optional<Comment> findByIdAndPost(Long id, Post post);
+    Optional<Comment> findByCommentIdAndPost(Long commentId, Post post);
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kt.blog.dto.CommentDTO;
 import com.kt.blog.model.Comment;
 import com.kt.blog.service.CommentService;
 
@@ -42,11 +43,12 @@ public class CommentController {
 
     // 특정 게시글의 특정 댓글 조회 API
     @GetMapping("/{commentId}")
-    public ResponseEntity<Comment> getCommentById(
+    public ResponseEntity<CommentDTO> getCommentById(
             @PathVariable Long postId,
             @PathVariable Long commentId) {
-        Comment comment = commentService.getCommentById(postId, commentId);
-        return ResponseEntity.ok(comment);
+        Comment comment = commentService.getCommentById(postId, commentId); // Comment 가져오기
+        CommentDTO commentDTO = commentService.convertToDTO(comment); // DTO로 변환
+        return ResponseEntity.ok(commentDTO);
     }
 
     // 댓글 삭제 API

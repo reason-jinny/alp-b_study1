@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.kt.blog.dto.PostDTO;
 import com.kt.blog.exception.EntityNotFoundException;
 import com.kt.blog.model.Post;
 import com.kt.blog.repository.PostRepository;
@@ -51,5 +52,15 @@ public class PostService {
         }
         postRepository.deleteById(id);
         return true;    
+    }
+
+    // 변환 메서드 추가
+    public PostDTO convertToDTO(Post post) {
+        return new PostDTO(
+            post.getPostId(), 
+            post.getPostTitle(), 
+            post.getPostContent(), 
+            post.getPostAuthor()
+        );
     }
 }

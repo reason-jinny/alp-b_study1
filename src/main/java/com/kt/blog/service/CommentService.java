@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.kt.blog.dto.CommentDTO;
 import com.kt.blog.model.Comment;
 import com.kt.blog.model.Post;
 import com.kt.blog.repository.CommentRepository;
@@ -41,7 +42,7 @@ public class CommentService {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new EntityNotFoundException("해당 ID의 게시글을 찾을 수 없습니다: " + postId));
 
-        return commentRepository.findByIdAndPost(commentId, post)
+        return commentRepository.findByCommentIdAndPost(commentId, post)
                 .orElseThrow(() -> new EntityNotFoundException("해당 ID의 댓글을 찾을 수 없습니다: " + commentId));
     }
 
@@ -51,5 +52,14 @@ public class CommentService {
                 .orElseThrow(() -> new EntityNotFoundException("해당 ID의 댓글을 찾을 수 없습니다: " + commentId));
     
         commentRepository.delete(comment);
+    }
+
+    // 변환 메서드 추가
+    public CommentDTO convertToDTO(Comment comment) {
+        return new CommentDTO(
+            comment.getCommentId(), 
+            comment.getCommentContent(), 
+            comment.getCommentAuthor()
+        );
     }
 }

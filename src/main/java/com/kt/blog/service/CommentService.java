@@ -29,11 +29,20 @@ public class CommentService {
     };
 
     // 특정 게시글의 모든 댓글 조회
-    public List<Comment> getCommentsByPostId(Long postId) {
+    public List<Comment> getAllComments(Long postId) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new EntityNotFoundException("해당 ID의 게시글을 찾을 수 없습니다: " + postId));
         
         return commentRepository.findByPost(post);
+    }
+
+    // 특정 게시글의 특정 댓글 조회
+    public Comment getCommentById(Long postId, Long commentId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new EntityNotFoundException("해당 ID의 게시글을 찾을 수 없습니다: " + postId));
+
+        return commentRepository.findByIdAndPost(commentId, post)
+                .orElseThrow(() -> new EntityNotFoundException("해당 ID의 댓글을 찾을 수 없습니다: " + commentId));
     }
 
     // 댓글 삭제

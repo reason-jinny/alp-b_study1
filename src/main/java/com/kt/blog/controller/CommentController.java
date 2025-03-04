@@ -18,24 +18,35 @@ import com.kt.blog.service.CommentService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/comments")
+@RequestMapping("/posts/{postId}/comments")
 @RequiredArgsConstructor
 public class CommentController {
 
     private final CommentService commentService;
 
     // 댓글 작성 API
-    @PostMapping("/{postId}")
-    public ResponseEntity<Comment> addComment(@PathVariable Long postId, @RequestBody Comment comment) {
+    @PostMapping
+    public ResponseEntity<Comment> addComment(
+        @PathVariable Long postId, 
+        @RequestBody Comment comment) {
         Comment savedComment = commentService.addComment(postId, comment);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedComment);
     }
 
     // 특정 게시글의 모든 댓글 조회 API
-    @GetMapping("/{postId}")
-    public ResponseEntity<List<Comment>> getCommentsByPostId(@PathVariable Long postId) {
-        List<Comment> comments = commentService.getCommentsByPostId(postId);
+    @GetMapping
+    public ResponseEntity<List<Comment>> getAllComments(@PathVariable Long postId) {
+        List<Comment> comments = commentService.getAllComments(postId);
         return ResponseEntity.ok(comments);
+    }
+
+    // 특정 게시글의 특정 댓글 조회 API
+    @GetMapping("/{commentId}")
+    public ResponseEntity<Comment> getCommentById(
+            @PathVariable Long postId,
+            @PathVariable Long commentId) {
+        Comment comment = commentService.getCommentById(postId, commentId);
+        return ResponseEntity.ok(comment);
     }
 
     // 댓글 삭제 API

@@ -1,5 +1,7 @@
 package com.kt.blog.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,6 +29,6 @@ public class Comment {
 
     @ManyToOne // 여러 개의 댓글이 하나의 게시글(Post)에 속함
     @JoinColumn(name = "postId", nullable = false) // postId FK 설정
+    @JsonBackReference // 순환 참조 방지
     private Post post;
-
 }
